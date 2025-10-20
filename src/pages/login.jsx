@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Card style={{ width: '400px' }} className="shadow">
         <Card.Body>
-          <h4 className="text-center mb-4">Login Gudang</h4>
+          <h4 className="text-center mb-4">Login</h4>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Username</Form.Label>

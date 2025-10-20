@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Table } from "react-bootstrap";
+import { Container, Form, Button, Table, ListGroup } from "react-bootstrap";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
@@ -32,48 +32,63 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
           spesifikasi: row["Spesifikasi"] || "-",
         }));
         setItems(filtered);
-        setFilteredItems(filtered);
       } catch (err) {
-        console.error("Gagal memuat Excel:", err);
+        console.error("Gagal memuat data Excel:", err);
       }
     };
     loadExcelData();
   }, []);
 
-  // 🔍 Fitur pencarian otomatis
+  // 🔍 Filter pencarian nama barang (tanpa batas jumlah)
   useEffect(() => {
-    if (searchTerm === "") {
-      setFilteredItems(items);
+    if (searchTerm.trim() === "") {
+      setFilteredItems([]);
     } else {
-      const result = items.filter((item) =>
-        item.nama.toLowerCase().includes(searchTerm.toLowerCase())
+      const lower = searchTerm.toLowerCase();
+      const results = items.filter(
+        (item) =>
+          item.nama.toLowerCase().includes(lower) ||
+          item.kode.toLowerCase().includes(lower) ||
+          item.spesifikasi.toLowerCase().includes(lower)
       );
-      setFilteredItems(result);
+      setFilteredItems(results);
     }
   }, [searchTerm, items]);
 
-  const handleSelect = (namaBarang) => {
-    const selected = items.find((i) => i.nama === namaBarang);
-    if (selected) {
-      setForm({
-        ...form,
-        nama: selected.nama,
-        kode: selected.kode,
-        spesifikasi: selected.spesifikasi,
-      });
-      setSearchTerm(selected.nama);
-    }
+  // 🔹 Saat klik hasil autocomplete
+  const handleSelect = (item) => {
+    setForm({
+      ...form,
+      nama: item.nama,
+      kode: item.kode,
+      spesifikasi: item.spesifikasi,
+    });
+    setSearchTerm(item.nama);
+    setFilteredItems([]);
   };
 
+  // 🔹 Simpan barang keluar
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.nama || !form.jumlah || !form.tanggal) {
+    if (!form.nama || !form.jumlah || !form.tanggal)
       return alert("Lengkapi semua kolom!");
-    }
 
-    onBarangKeluar(form.kode, form.nama, form.spesifikasi, form.jumlah, form.tanggal); // update stok global
+    onBarangKeluar(
+      form.kode,
+      form.nama,
+      form.spesifikasi,
+      form.jumlah,
+      form.tanggal
+    );
+
     setRiwayat([...riwayat, form]);
-    setForm({ kode: "", nama: "", spesifikasi: "", jumlah: "", tanggal: "" });
+    setForm({
+      kode: "",
+      nama: "",
+      spesifikasi: "",
+      jumlah: "",
+      tanggal: "",
+    });
     setSearchTerm("");
   };
 
@@ -82,7 +97,11 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>📤 Barang Keluar</h3>
         <div>
-          <Button variant="secondary" className="me-2" onClick={() => navigate("/dashboard")}>
+          <Button
+            variant="secondary"
+            className="me-2"
+            onClick={() => navigate("/dashboard")}
+          >
             Kembali
           </Button>
           <Button variant="danger" onClick={onLogout}>
@@ -91,43 +110,53 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
         </div>
       </div>
 
-      {/* Form Input */}
-      <Form onSubmit={handleSubmit} className="mb-4">
-        <Form.Group className="mb-3 position-relative">
+      {/* 🔍 Form Input Barang Keluar */}
+      <Form onSubmit={handleSubmit} className="mb-4 position-relative">
+        <Form.Group className="mb-3">
           <Form.Label>Nama Barang</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ketik untuk mencari barang..."
+            placeholder="Ketik nama, kode, atau spesifikasi barang..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            autoComplete="off"
           />
-          {searchTerm && filteredItems.length > 0 && (
-            <div
-              className="position-absolute bg-white border w-100 mt-1 shadow-sm"
-              style={{ maxHeight: "200px", overflowY: "auto", zIndex: 10 }}
+
+          {/* 🔽 Dropdown autocomplete */}
+          {filteredItems.length > 0 && (
+            <ListGroup
+              className="position-absolute w-100 shadow-sm"
+              style={{
+                zIndex: 10,
+                maxHeight: "250px",
+                overflowY: "auto",
+                backgroundColor: "white",
+              }}
             >
               {filteredItems.map((item, i) => (
-                <div
+                <ListGroup.Item
                   key={i}
-                  className="p-2 border-bottom hover-bg-light"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleSelect(item.nama)}
+                  action
+                  onClick={() => handleSelect(item)}
                 >
-                  {item.nama}
-                </div>
+                  <div className="fw-bold">{item.nama}</div>
+                  <div className="small text-muted">
+                    {item.kode} — {item.spesifikasi}
+                  </div>
+                </ListGroup.Item>
               ))}
-            </div>
+            </ListGroup>
           )}
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>Kode Barang</Form.Label>
-          <Form.Control type="text" value={form.kode} disabled readOnly />
+          <Form.Control type="text" value={form.kode} readOnly />
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label>Spesifikasi</Form.Label>
-          <Form.Control type="text" value={form.spesifikasi} disabled readOnly />
+          <Form.Control as="textarea" rows={2} value={form.spesifikasi} readOnly />
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -153,7 +182,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
         </Button>
       </Form>
 
-      {/* Riwayat Barang Keluar */}
+      {/* 📋 Riwayat Barang Keluar */}
       <h5>Riwayat Barang Keluar</h5>
       <Table bordered hover responsive className="shadow-sm align-middle">
         <thead className="table-danger text-center">
