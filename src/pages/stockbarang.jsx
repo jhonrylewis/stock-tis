@@ -7,14 +7,14 @@ const StockBarang = ({ onLogout, items }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
-  // 🔍 Filter barang berdasarkan input pencarian
+  // 🔍 Filter barang berdasarkan pencarian
   const filteredItems = items.filter(
     (item) =>
       item.nama?.toLowerCase().includes(search.toLowerCase()) ||
       item.kode?.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 📤 Fungsi export ke Excel
+  // 📤 Export ke Excel
   const exportToExcel = () => {
     if (items.length === 0) return alert("Tidak ada data untuk diexport!");
     const worksheet = XLSX.utils.json_to_sheet(items);
@@ -23,7 +23,7 @@ const StockBarang = ({ onLogout, items }) => {
     XLSX.writeFile(workbook, "StockBarang.xlsx");
   };
 
-  // 🗑️ Reset data
+  // 🗑️ Reset data stok
   const handleReset = () => {
     if (window.confirm("Yakin ingin menghapus semua data stok?")) {
       localStorage.removeItem("stockData");
@@ -33,7 +33,6 @@ const StockBarang = ({ onLogout, items }) => {
 
   return (
     <Container className="py-4">
-      {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>📦 Daftar Stok Barang</h3>
         <div>
@@ -49,7 +48,6 @@ const StockBarang = ({ onLogout, items }) => {
         </div>
       </div>
 
-      {/* Baris Pencarian dan Reset */}
       <Row className="mb-3 align-items-center">
         <Col md={6}>
           <Form.Control
@@ -66,13 +64,13 @@ const StockBarang = ({ onLogout, items }) => {
         </Col>
       </Row>
 
-      {/* Tabel Stok */}
       <Table bordered hover responsive className="shadow-sm align-middle">
         <thead className="table-primary text-center">
           <tr>
             <th>No</th>
             <th>Kode Barang</th>
             <th>Nama Barang</th>
+            <th>Spesifikasi</th>
             <th>Jumlah Masuk</th>
             <th>Jumlah Keluar</th>
             <th>Sisa</th>
@@ -83,7 +81,7 @@ const StockBarang = ({ onLogout, items }) => {
         <tbody className="text-center">
           {filteredItems.length === 0 ? (
             <tr>
-              <td colSpan="8">Tidak ada data barang yang cocok</td>
+              <td colSpan="9">Tidak ada data barang yang cocok</td>
             </tr>
           ) : (
             filteredItems.map((item, i) => (
@@ -91,6 +89,7 @@ const StockBarang = ({ onLogout, items }) => {
                 <td>{i + 1}</td>
                 <td>{item.kode}</td>
                 <td>{item.nama}</td>
+                <td>{item.spesifikasi}</td>
                 <td>{item.jumlahMasuk || 0}</td>
                 <td>{item.jumlahKeluar || 0}</td>
                 <td>{item.sisa}</td>

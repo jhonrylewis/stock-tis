@@ -9,14 +9,7 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validasi login sederhana
-    if (username === 'admin' && password === '12345') {
-      onLogin(); // set state authenticated di App.js
-      navigate('/dashboard'); // langsung arahkan ke halaman dashboard
-    } else {
-      alert('Username atau password salah!');
-    }
+    onLogin(username, password); // ✅ kirim data ke App.js
   };
 
   return (

@@ -1,0 +1,197 @@
+import React, { useEffect, useState } from "react";
+import { Container, Form, Button, Table, ListGroup } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
+
+const BarangMasuk = ({ onLogout, onBarangMasuk }) => {
+  const navigate = useNavigate();
+  const [items, setItems] = useState([]);
+  const [riwayat, setRiwayat] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [form, setForm] = useState({
+    kode: "",
+    nama: "",
+    spesifikasi: "",
+    jumlah: "",
+    tanggal: "",
+  });
+
+  // 🔹 Load data dari Excel
+  useEffect(() => {
+    const loadExcelData = async () => {
+      const response = await fetch("/data_barang.xlsx");
+      const arrayBuffer = await response.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData = XLSX.utils.sheet_to_json(sheet);
+      const filtered = jsonData.map((row) => ({
+        kode: row["Kode"],
+        nama: row["Nama"],
+        spesifikasi: row["Spesifikasi"] || "-",
+      }));
+      setItems(filtered);
+    };
+    loadExcelData();
+  }, []);
+
+  // 🔹 Filter pencarian nama barang
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredItems([]);
+    } else {
+      const results = items.filter((item) =>
+        item.nama.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredItems(results.slice(0, 5)); // tampilkan max 5 hasil
+    }
+  }, [searchTerm, items]);
+
+  // 🔹 Saat klik hasil autocomplete
+  const handleSelect = (item) => {
+    setForm({
+      ...form,
+      nama: item.nama,
+      kode: item.kode,
+      spesifikasi: item.spesifikasi,
+    });
+    setSearchTerm(item.nama);
+    setFilteredItems([]);
+  };
+
+  // 🔹 Simpan barang masuk
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.nama || !form.jumlah || !form.tanggal)
+      return alert("Lengkapi semua kolom!");
+
+    onBarangMasuk(
+      form.kode,
+      form.nama,
+      form.spesifikasi,
+      form.jumlah,
+      form.tanggal
+    );
+
+    setRiwayat([...riwayat, form]);
+    setForm({
+      kode: "",
+      nama: "",
+      spesifikasi: "",
+      jumlah: "",
+      tanggal: "",
+    });
+    setSearchTerm("");
+  };
+
+  return (
+    <Container className="py-4">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3>📥 Barang Masuk</h3>
+        <div>
+          <Button
+            variant="secondary"
+            className="me-2"
+            onClick={() => navigate("/dashboard")}
+          >
+            Kembali
+          </Button>
+          <Button variant="danger" onClick={onLogout}>
+            Logout
+          </Button>
+        </div>
+      </div>
+
+      {/* 🔍 Form Input Barang Masuk */}
+      <Form onSubmit={handleSubmit} className="mb-4 position-relative">
+        <Form.Group className="mb-3">
+          <Form.Label>Nama Barang</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Ketik nama barang..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {/* 🔽 Dropdown autocomplete */}
+          {filteredItems.length > 0 && (
+            <ListGroup
+              className="position-absolute w-100 shadow-sm"
+              style={{ zIndex: 10, maxHeight: "200px", overflowY: "auto" }}
+            >
+              {filteredItems.map((item, i) => (
+                <ListGroup.Item
+                  key={i}
+                  action
+                  onClick={() => handleSelect(item)}
+                >
+                  {item.nama}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Kode Barang</Form.Label>
+          <Form.Control type="text" value={form.kode} readOnly />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Spesifikasi</Form.Label>
+          <Form.Control as="textarea" rows={2} value={form.spesifikasi} readOnly />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Jumlah Masuk</Form.Label>
+          <Form.Control
+            type="number"
+            value={form.jumlah}
+            onChange={(e) => setForm({ ...form, jumlah: e.target.value })}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Tanggal Masuk</Form.Label>
+          <Form.Control
+            type="date"
+            value={form.tanggal}
+            onChange={(e) => setForm({ ...form, tanggal: e.target.value })}
+          />
+        </Form.Group>
+
+        <Button type="submit" variant="primary">
+          Simpan
+        </Button>
+      </Form>
+
+      {/* 📋 Riwayat Barang Masuk */}
+      <h5>Riwayat Barang Masuk</h5>
+      <Table bordered hover responsive className="shadow-sm align-middle">
+        <thead className="table-success text-center">
+          <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Spesifikasi</th>
+            <th>Jumlah</th>
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {riwayat.map((r, i) => (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{r.kode}</td>
+              <td>{r.nama}</td>
+              <td>{r.spesifikasi}</td>
+              <td>{r.jumlah}</td>
+              <td>{r.tanggal}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
+  );
+};
+
+export default BarangMasuk;

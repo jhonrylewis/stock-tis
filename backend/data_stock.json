@@ -1,0 +1,22 @@
+[
+  {
+    "kode": "377004M002",
+    "nama": "MOTHERBOARD KOMPUTER",
+    "spesifikasi": "TIPE PRIME H510M-K LGA 1200 MEREK ASUS",
+    "jumlahMasuk": 4,
+    "jumlahKeluar": 0,
+    "sisa": 4,
+    "terakhirMasuk": "2025-10-20",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P001",
+    "nama": "POWER SUPPLY UNIT (PSU) KOMPUTER",
+    "spesifikasi": "480W MEREK SIMBADDA",
+    "jumlahMasuk": 5,
+    "jumlahKeluar": 0,
+    "sisa": 5,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  }
+]

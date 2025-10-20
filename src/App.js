@@ -1,82 +1,133 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { Container, Alert } from "react-bootstrap";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
-import StockBarang from "./pages/stockbarang";
 import BarangMasuk from "./pages/barangmasuk";
 import BarangKeluar from "./pages/barangkeluar";
+import StockBarang from "./pages/stockbarang";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [stockData, setStockData] = useState([]);
 
-  // === Stok Barang Global ===
-  const [stockData, setStockData] = useState(() => {
-    const saved = localStorage.getItem("stockData");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  // Simpan otomatis ke localStorage
+  // 🟢 Load stok dari backend + localStorage saat pertama kali
   useEffect(() => {
-    localStorage.setItem("stockData", JSON.stringify(stockData));
+    const fetchStock = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/stock");
+        const data = await response.json();
+        setStockData(data);
+        localStorage.setItem("stockData", JSON.stringify(data));
+      } catch (error) {
+        console.error("Gagal mengambil data dari server:", error);
+        const saved = localStorage.getItem("stockData");
+        if (saved) setStockData(JSON.parse(saved));
+      }
+    };
+
+    fetchStock();
+
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn === "true") setIsLoggedIn(true);
+  }, []);
+
+  // 🟡 Sync ke backend setiap kali stok berubah
+  useEffect(() => {
+    if (stockData.length > 0) {
+      localStorage.setItem("stockData", JSON.stringify(stockData));
+      fetch("http://localhost:5000/api/stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stockData),
+      }).catch((err) => console.error("Gagal sync ke backend:", err));
+    }
   }, [stockData]);
 
-  // Fungsi menambah stok (Barang Masuk)
-  const handleBarangMasuk = (kode, nama, jumlah, tanggal) => {
+  // 🟣 Fungsi login
+  const handleLogin = (username, password) => {
+    if (username === "admin" && password === "12345") {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
+    } else {
+      alert("Username atau password salah!");
+    }
+  };
+
+  // 🔴 Fungsi logout
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+  };
+
+  // 📥 Barang Masuk
+  const handleBarangMasuk = (kode, nama, spesifikasi, jumlah, tanggal) => {
     setStockData((prev) => {
-      const existing = prev.find((item) => item.kode === kode);
-      if (existing) {
-        return prev.map((item) =>
+      const exist = prev.find((item) => item.kode === kode);
+      let updated;
+      if (exist) {
+        updated = prev.map((item) =>
           item.kode === kode
             ? {
                 ...item,
-                sisa: item.sisa + parseInt(jumlah),
                 jumlahMasuk: (item.jumlahMasuk || 0) + parseInt(jumlah),
+                sisa: (item.sisa || 0) + parseInt(jumlah),
                 terakhirMasuk: tanggal,
               }
             : item
         );
       } else {
-        return [
+        updated = [
           ...prev,
           {
             kode,
             nama,
-            sisa: parseInt(jumlah),
+            spesifikasi,
             jumlahMasuk: parseInt(jumlah),
             jumlahKeluar: 0,
+            sisa: parseInt(jumlah),
             terakhirMasuk: tanggal,
             terakhirKeluar: "-",
           },
         ];
       }
+      return updated;
     });
   };
 
-  // Fungsi mengurangi stok (Barang Keluar)
-  const handleBarangKeluar = (kode, nama, jumlah, tanggal) => {
-    setStockData((prev) =>
-      prev.map((item) =>
-        item.kode === kode
-          ? {
-              ...item,
-              sisa: item.sisa - parseInt(jumlah),
-              jumlahKeluar: (item.jumlahKeluar || 0) + parseInt(jumlah),
-              terakhirKeluar: tanggal,
-            }
-          : item
-      )
-    );
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('isAuthenticated');
+  // 📤 Barang Keluar
+  const handleBarangKeluar = (kode, nama, spesifikasi, jumlah, tanggal) => {
+    setStockData((prev) => {
+      const exist = prev.find((item) => item.kode === kode);
+      let updated;
+      if (exist) {
+        const sisaBaru = (exist.sisa || 0) - parseInt(jumlah);
+        updated = prev.map((item) =>
+          item.kode === kode
+            ? {
+                ...item,
+                jumlahKeluar: (item.jumlahKeluar || 0) + parseInt(jumlah),
+                sisa: sisaBaru >= 0 ? sisaBaru : 0,
+                terakhirKeluar: tanggal,
+              }
+            : item
+        );
+      } else {
+        updated = [
+          ...prev,
+          {
+            kode,
+            nama,
+            spesifikasi,
+            jumlahMasuk: 0,
+            jumlahKeluar: parseInt(jumlah),
+            sisa: 0,
+            terakhirMasuk: "-",
+            terakhirKeluar: tanggal,
+          },
+        ];
+      }
+      return updated;
+    });
   };
 
   return (
@@ -84,38 +135,58 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Login onLogin={() => setIsAuthenticated(true)} />}
+          element={
+            isLoggedIn ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
         />
 
-        {isAuthenticated ? (
-          <>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route
-              path="/stock"
-              element={<StockBarang onLogout={handleLogout} items={stockData} />}
-            />
-            <Route
-              path="/barang-masuk"
-              element={
-                <BarangMasuk
-                  onLogout={handleLogout}
-                  onBarangMasuk={handleBarangMasuk}
-                />
-              }
-            />
-            <Route
-              path="/barang-keluar"
-              element={
-                <BarangKeluar
-                  onLogout={handleLogout}
-                  onBarangKeluar={handleBarangKeluar}
-                />
-              }
-            />
-          </>
-        ) : (
-          <Route path="*" element={<Navigate to="/" />} />
-        )}
+        <Route
+          path="/dashboard"
+          element={
+            isLoggedIn ? (
+              <Dashboard onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/barang-masuk"
+          element={
+            isLoggedIn ? (
+              <BarangMasuk onLogout={handleLogout} onBarangMasuk={handleBarangMasuk} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/barang-keluar"
+          element={
+            isLoggedIn ? (
+              <BarangKeluar onLogout={handleLogout} onBarangKeluar={handleBarangKeluar} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/stock"
+          element={
+            isLoggedIn ? (
+              <StockBarang onLogout={handleLogout} items={stockData} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
       </Routes>
     </Router>
   );
