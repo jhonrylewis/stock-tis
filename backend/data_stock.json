@@ -18,5 +18,275 @@
     "sisa": 5,
     "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "-"
+  },
+  {
+    "kode": "231002S009",
+    "nama": "SWITCH MANAGEABLE 20 PORT (ALAT PENDISTRIBUSI DATA JARINGAN)",
+    "spesifikasi": "TIPE DGS-1210-20 SMART MANAGED, 16 X 10/100/1000BASE-T PORTS, 4 X GIGABIT SFP PORTS MEREK D-LINK",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "231002S006",
+    "nama": "SWITCH MANAGEABLE 8 PORT (ALAT PENDISTRIBUSI DATA JARINGAN)",
+    "spesifikasi": "TIPE DGS-1100-08, GIGABIT LITE SMART MANAGED SWITCH MEREK D-LINK",
+    "jumlahMasuk": 1,
+    "jumlahKeluar": 0,
+    "sisa": 1,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004S011",
+    "nama": "SWITCH HUB 48 PORT, 10/100/1000",
+    "spesifikasi": "TIPE TL-SG1048 MEREK TP-LINK",
+    "jumlahMasuk": 1,
+    "jumlahKeluar": 0,
+    "sisa": 1,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P030",
+    "nama": "POWER OVER ETHERNET (POE) ADAPTOR UBIQUITI",
+    "spesifikasi": "KAPASITAS 48V",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P029",
+    "nama": "POWER OVER ETHERNET (POE) ADAPTOR MIKROTIK ",
+    "spesifikasi": "KAPASITAS 30V",
+    "jumlahMasuk": 3,
+    "jumlahKeluar": 0,
+    "sisa": 3,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004H011",
+    "nama": "HDMI WIRELESS EXTENDER",
+    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER, UGREEN",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "362002R002",
+    "nama": "RUBBER GRIP 38 MM",
+    "spesifikasi": "TIPE RG38 MEREK KINGOYA",
+    "jumlahMasuk": 9,
+    "jumlahKeluar": 0,
+    "sisa": 9,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004A017",
+    "nama": "ANTENA OUTDOOR DISH 25 DBI",
+    "spesifikasi": "TIPE POWERBEAM M5 400 25DBI MEREK UBIQUITI",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004K054",
+    "nama": "KABEL HDMI 30 METER",
+    "spesifikasi": "KONEKTOR BENTUK PACKING PABRIK",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P028",
+    "nama": "POWER SURGE PROTECTOR (PROTEKSI TEGANGAN LISTRIK BERLEBIH PADA JALUR LISTRIK)",
+    "spesifikasi": "TIPE PM8-GR  ESSENTIAL SURGEARREST 8 OUTLETS 230V MEREK APC",
+    "jumlahMasuk": 4,
+    "jumlahKeluar": 0,
+    "sisa": 4,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004R023",
+    "nama": "ROUTER WIRELESS OUTDOOR POINT TO MULTI POINT HIGH/LARGE SCALE (PERANGKAT PENGHUBUNG JARINGAN)",
+    "spesifikasi": "EPMP 3000; 4X4 MIMO UP TO 1,2 GBPS; CHANNEL WIDTH : 10,20,40,80 MHZ; SUBSRIBERS/SECTOR UP TO 120; TRANSMIT POWER RANGE +32 DBM; GPS : YES, INTERNAL   CAMBIUM",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004K031",
+    "nama": "KIPAS PROCESSOR",
+    "spesifikasi": "SOCKET LGA 1200",
+    "jumlahMasuk": 5,
+    "jumlahKeluar": 0,
+    "sisa": 5,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004S042",
+    "nama": "SSD KOMPUTER ( MEMORY PENYIMPANAN DATA) 128 GB",
+    "spesifikasi": "TIPE SATA MEREK VGEN",
+    "jumlahMasuk": 10,
+    "jumlahKeluar": 0,
+    "sisa": 10,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004M003",
+    "nama": "MEMORY RAM DESKTOP COMPUTER",
+    "spesifikasi": "8 GB DDR3 PC12800 MEREK VGEN",
+    "jumlahMasuk": 7,
+    "jumlahKeluar": 0,
+    "sisa": 7,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P012",
+    "nama": "PROCESSOR KOMPUTER",
+    "spesifikasi": "CORE I5 - 10400 LGA 1200 + FAN INTEL",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004M001",
+    "nama": "MONITOR KOMPUTER",
+    "spesifikasi": "TIPE 19M38L-B UKURAN 19 INCH MEREK LG",
+    "jumlahMasuk": 6,
+    "jumlahKeluar": 0,
+    "sisa": 6,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004K001",
+    "nama": "KEYBOARD KOMPUTER",
+    "spesifikasi": "TIPE K-120 USB MEREK LOGITECH",
+    "jumlahMasuk": 13,
+    "jumlahKeluar": 0,
+    "sisa": 13,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004M004",
+    "nama": "MOUSE KOMPUTER",
+    "spesifikasi": "TIPE B100 USB MEREK LOGITECH",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004K059",
+    "nama": "KABEL FIBER OPTIC DROP WIRE",
+    "spesifikasi": "2 CORE, 1 BOX ISI 1000 METER",
+    "jumlahMasuk": 4,
+    "jumlahKeluar": 0,
+    "sisa": 4,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004B013",
+    "nama": "BOX ODP FIBER OPTIC (BOX PERSAMBUNGAN KABEL FO)",
+    "spesifikasi": "ODP TIANG / WALL 8 CORE LENGKAP PIGTAIL CS/APC",
+    "jumlahMasuk": 3,
+    "jumlahKeluar": 0,
+    "sisa": 3,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "231002P003",
+    "nama": "POWER SUPPLY CCTV 30A",
+    "spesifikasi": "12V 30A BOX BESI, TERMINAL KONEKTOR, FUSE",
+    "jumlahMasuk": 5,
+    "jumlahKeluar": 0,
+    "sisa": 5,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004H005",
+    "nama": "HEAD PRINTER EPSON BESAR",
+    "spesifikasi": "UNTUK EPSON LQ 2180/2190, RRT",
+    "jumlahMasuk": 5,
+    "jumlahKeluar": 0,
+    "sisa": 5,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004P018",
+    "nama": "POWER SUPPLY PRINTER EPSON LQ 2190",
+    "spesifikasi": "DC 35V 3A",
+    "jumlahMasuk": 4,
+    "jumlahKeluar": 0,
+    "sisa": 4,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004R028",
+    "nama": "ROUTER ACCESS POINT INDOOR SMALL (PERANGKAT PENGHUBUNG JARINGAN)",
+    "spesifikasi": "UNIFI AC MESH AP UAP-AC-M OUTDOOR; 2 X DUAL-BAND ANTENA; FREQUENCY 2.4GHZ/5GHZ UP TO 867  UBIQUITI",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "377004C038",
+    "nama": "CONVERTER VGA TO HDMI",
+    "spesifikasi": "FULL HD 1080P",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "374010C002",
+    "nama": "CABLE TIES 15 CM",
+    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
+    "jumlahMasuk": 12,
+    "jumlahKeluar": 0,
+    "sisa": 12,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "374010C001",
+    "nama": "CABLE TIES 10 CM",
+    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
+    "jumlahMasuk": 2,
+    "jumlahKeluar": 0,
+    "sisa": 2,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
   }
 ]

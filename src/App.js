@@ -10,16 +10,19 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [stockData, setStockData] = useState([]);
 
-  // 🟢 Load stok dari backend + localStorage saat pertama kali
+  // 🟢 Ambil data dari backend + simpan ke localStorage
   useEffect(() => {
+    const backendURL = `http://${window.location.hostname}:5000/api/stock`;
+
     const fetchStock = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/stock");
+        const response = await fetch(backendURL);
+        if (!response.ok) throw new Error("Server tidak merespons");
         const data = await response.json();
         setStockData(data);
         localStorage.setItem("stockData", JSON.stringify(data));
       } catch (error) {
-        console.error("Gagal mengambil data dari server:", error);
+        console.warn("Gagal ambil data dari server, gunakan localStorage:", error);
         const saved = localStorage.getItem("stockData");
         if (saved) setStockData(JSON.parse(saved));
       }
@@ -31,19 +34,22 @@ function App() {
     if (loggedIn === "true") setIsLoggedIn(true);
   }, []);
 
-  // 🟡 Sync ke backend setiap kali stok berubah
+  // 🟡 Sinkronisasi ke backend jika stok berubah
   useEffect(() => {
     if (stockData.length > 0) {
       localStorage.setItem("stockData", JSON.stringify(stockData));
-      fetch("http://localhost:5000/api/stock", {
+
+      const backendURL = `http://${window.location.hostname}:5000/api/stock`;
+
+      fetch(backendURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(stockData),
-      }).catch((err) => console.error("Gagal sync ke backend:", err));
+      }).catch((err) => console.error("⚠️ Gagal sync ke backend:", err));
     }
   }, [stockData]);
 
-  // 🟣 Fungsi login
+  // 🟣 Login
   const handleLogin = (username, password) => {
     if (username === "admin" && password === "12345") {
       setIsLoggedIn(true);
@@ -53,7 +59,7 @@ function App() {
     }
   };
 
-  // 🔴 Fungsi logout
+  // 🔴 Logout
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");

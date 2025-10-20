@@ -10,49 +10,66 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [stockData, setStockData] = useState([]);
 
-  // 🔹 Load stok dari localStorage saat pertama kali
+  // 🟢 Load stok dari backend + localStorage saat pertama kali
   useEffect(() => {
-    const savedStock = localStorage.getItem("stockData");
-    if (savedStock) {
-      setStockData(JSON.parse(savedStock));
-    }
+    const fetchStock = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/stock");
+        const data = await response.json();
+        setStockData(data);
+        localStorage.setItem("stockData", JSON.stringify(data));
+      } catch (error) {
+        console.error("Gagal mengambil data dari server:", error);
+        const saved = localStorage.getItem("stockData");
+        if (saved) setStockData(JSON.parse(saved));
+      }
+    };
+
+    fetchStock();
+
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn === "true") setIsLoggedIn(true);
   }, []);
 
-  // 🔹 Simpan stok ke localStorage setiap ada perubahan
-  useEffect(() => {
+  // 🟡 Sync ke backend setiap kali stok berubah
+ useEffect(() => {
+  if (stockData.length > 0) {
     localStorage.setItem("stockData", JSON.stringify(stockData));
-  }, [stockData]);
 
-  // 🔹 Fungsi login
-const handleLogin = (username, password) => {
-  if (username === "admin" && password === "12345") {
-    setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true"); // simpan login state
-  } else {
-    alert("Username atau password salah!");
+    const backendURL = `http://${window.location.hostname}:5000/api/stock`;
+
+    fetch(backendURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(stockData),
+    }).catch((err) => console.error("Gagal sync ke backend:", err));
   }
-};
+}, [stockData]);
 
-  // 🔹 Fungsi logout
+
+  // 🟣 Fungsi login
+  const handleLogin = (username, password) => {
+    if (username === "admin" && password === "12345") {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
+    } else {
+      alert("Username atau password salah!");
+    }
+  };
+
+  // 🔴 Fungsi logout
   const handleLogout = () => {
-  setIsLoggedIn(false);
-  localStorage.removeItem("isLoggedIn");
-};
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+  };
 
-useEffect(() => {
-  const loggedIn = localStorage.getItem("isLoggedIn");
-  if (loggedIn === "true") {
-    setIsLoggedIn(true);
-  }
-}, []);
-
-  // 🔹 Fungsi barang masuk → update stok
+  // 📥 Barang Masuk
   const handleBarangMasuk = (kode, nama, spesifikasi, jumlah, tanggal) => {
-    setStockData((prevData) => {
-      const existingItem = prevData.find((item) => item.kode === kode);
-      if (existingItem) {
-        // Update stok lama
-        return prevData.map((item) =>
+    setStockData((prev) => {
+      const exist = prev.find((item) => item.kode === kode);
+      let updated;
+      if (exist) {
+        updated = prev.map((item) =>
           item.kode === kode
             ? {
                 ...item,
@@ -63,9 +80,8 @@ useEffect(() => {
             : item
         );
       } else {
-        // Tambah stok baru
-        return [
-          ...prevData,
+        updated = [
+          ...prev,
           {
             kode,
             nama,
@@ -78,17 +94,18 @@ useEffect(() => {
           },
         ];
       }
+      return updated;
     });
   };
 
-  // 🔹 Fungsi barang keluar → update stok
+  // 📤 Barang Keluar
   const handleBarangKeluar = (kode, nama, spesifikasi, jumlah, tanggal) => {
-    setStockData((prevData) => {
-      const existingItem = prevData.find((item) => item.kode === kode);
-      if (existingItem) {
-        // Update stok keluar
-        const sisaBaru = (existingItem.sisa || 0) - parseInt(jumlah);
-        return prevData.map((item) =>
+    setStockData((prev) => {
+      const exist = prev.find((item) => item.kode === kode);
+      let updated;
+      if (exist) {
+        const sisaBaru = (exist.sisa || 0) - parseInt(jumlah);
+        updated = prev.map((item) =>
           item.kode === kode
             ? {
                 ...item,
@@ -99,9 +116,8 @@ useEffect(() => {
             : item
         );
       } else {
-        // Barang belum ada di stok
-        return [
-          ...prevData,
+        updated = [
+          ...prev,
           {
             kode,
             nama,
@@ -114,13 +130,13 @@ useEffect(() => {
           },
         ];
       }
+      return updated;
     });
   };
 
   return (
     <Router>
       <Routes>
-        {/* 🔐 Login */}
         <Route
           path="/"
           element={
@@ -132,7 +148,6 @@ useEffect(() => {
           }
         />
 
-        {/* 🏠 Dashboard */}
         <Route
           path="/dashboard"
           element={
@@ -144,37 +159,28 @@ useEffect(() => {
           }
         />
 
-        {/* 📥 Barang Masuk */}
         <Route
           path="/barang-masuk"
           element={
             isLoggedIn ? (
-              <BarangMasuk
-                onLogout={handleLogout}
-                onBarangMasuk={handleBarangMasuk}
-              />
+              <BarangMasuk onLogout={handleLogout} onBarangMasuk={handleBarangMasuk} />
             ) : (
               <Navigate to="/" />
             )
           }
         />
 
-        {/* 📤 Barang Keluar */}
         <Route
           path="/barang-keluar"
           element={
             isLoggedIn ? (
-              <BarangKeluar
-                onLogout={handleLogout}
-                onBarangKeluar={handleBarangKeluar}
-              />
+              <BarangKeluar onLogout={handleLogout} onBarangKeluar={handleBarangKeluar} />
             ) : (
               <Navigate to="/" />
             )
           }
         />
 
-        {/* 📦 Stock Barang */}
         <Route
           path="/stock"
           element={
