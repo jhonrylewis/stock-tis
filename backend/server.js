@@ -62,6 +62,42 @@ app.post("/api/riwayat-barang-keluar", (req, res) => {
   res.json({ message: "Riwayat barang keluar berhasil disimpan" });
 });
 
+
+// 🔴 Hapus semua data stok
+app.delete("/api/stock", (req, res) => {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      fs.unlinkSync(DATA_FILE); // hapus file JSON
+    }
+    res.json({ message: "Data stok berhasil dihapus" });
+  } catch (err) {
+    console.error("Gagal hapus data stok:", err);
+    res.status(500).json({ message: "Gagal menghapus data stok" });
+  }
+});
+
+// DELETE semua riwayat barang masuk
+app.delete("/api/riwayat-barang-masuk", (req, res) => {
+  try {
+    if (fs.existsSync(RIWAYAT_MASUK_FILE)) fs.writeFileSync(RIWAYAT_MASUK_FILE, "[]");
+    res.json({ message: "Semua riwayat barang masuk berhasil dihapus" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Gagal menghapus riwayat barang masuk" });
+  }
+});
+
+// DELETE semua riwayat barang keluar
+app.delete("/api/riwayat-barang-keluar", (req, res) => {
+  try {
+    if (fs.existsSync(RIWAYAT_KELUAR_FILE)) fs.writeFileSync(RIWAYAT_KELUAR_FILE, "[]");
+    res.json({ message: "Semua riwayat barang keluar berhasil dihapus" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Gagal menghapus riwayat barang keluar" });
+  }
+});
+
 // 🔹 Jalankan server di semua IP LAN
 const PORT = 5000;
 app.listen(PORT, "0.0.0.0", () => {

@@ -6,7 +6,7 @@
     "jumlahMasuk": 4,
     "jumlahKeluar": 0,
     "sisa": 4,
-    "terakhirMasuk": "2025-10-20",
+    "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "-"
   },
   {
@@ -72,7 +72,7 @@
   {
     "kode": "377004H011",
     "nama": "HDMI WIRELESS EXTENDER",
-    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER, UGREEN",
+    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER",
     "jumlahMasuk": 2,
     "jumlahKeluar": 0,
     "sisa": 2,
@@ -263,15 +263,15 @@
     "kode": "377004C038",
     "nama": "CONVERTER VGA TO HDMI",
     "spesifikasi": "FULL HD 1080P",
-    "jumlahMasuk": 2,
+    "jumlahMasuk": 1,
     "jumlahKeluar": 0,
-    "sisa": 2,
+    "sisa": 1,
     "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "-"
   },
   {
-    "kode": "374010C002",
-    "nama": "CABLE TIES 15 CM",
+    "kode": "374010C003",
+    "nama": "CABLE TIES 20 CM",
     "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
     "jumlahMasuk": 12,
     "jumlahKeluar": 0,
@@ -290,23 +290,13 @@
     "terakhirKeluar": "-"
   },
   {
-    "kode": "231003H002",
-    "nama": "HANDPHONE",
-    "spesifikasi": "HOT 50 6/256GB INFINIX",
-    "jumlahMasuk": 3,
-    "jumlahKeluar": 1,
-    "sisa": 2,
-    "terakhirMasuk": "2025-10-21",
-    "terakhirKeluar": "2025-10-21"
-  },
-  {
     "kode": "231002P017",
     "nama": "PRINTER THERMAL",
     "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
-    "jumlahMasuk": 31,
-    "jumlahKeluar": 14,
-    "sisa": 17,
-    "terakhirMasuk": "2025-10-21",
+    "jumlahMasuk": 15,
+    "jumlahKeluar": 1,
+    "sisa": 14,
+    "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "2025-10-21"
   }
 ]

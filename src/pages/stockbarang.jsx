@@ -3,7 +3,7 @@ import { Container, Button, Table, Form, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 
-const StockBarang = ({ onLogout, items }) => {
+const StockBarang = ({ onLogout, items, setStockData }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
@@ -23,11 +23,38 @@ const StockBarang = ({ onLogout, items }) => {
     XLSX.writeFile(workbook, "StockBarang.xlsx");
   };
 
-  // 🗑️ Reset data stok
-  const handleReset = () => {
-    if (window.confirm("Yakin ingin menghapus semua data stok?")) {
-      localStorage.removeItem("stockData");
-      window.location.reload();
+  // 🗑️ Reset data stok + riwayat masuk & keluar via DELETE endpoint
+  const handleReset = async () => {
+    if (!window.confirm("Yakin ingin menghapus semua data stok dan riwayat?")) return;
+
+    try {
+      // Hapus stok
+      const resStock = await fetch(`http://${window.location.hostname}:5000/api/stock`, {
+        method: "DELETE",
+      });
+      if (!resStock.ok) throw new Error("Gagal menghapus data stok");
+
+      // Hapus riwayat masuk
+      const resMasuk = await fetch(
+        `http://${window.location.hostname}:5000/api/riwayat-barang-masuk`,
+        { method: "DELETE" }
+      );
+      if (!resMasuk.ok) throw new Error("Gagal menghapus riwayat barang masuk");
+
+      // Hapus riwayat keluar
+      const resKeluar = await fetch(
+        `http://${window.location.hostname}:5000/api/riwayat-barang-keluar`,
+        { method: "DELETE" }
+      );
+      if (!resKeluar.ok) throw new Error("Gagal menghapus riwayat barang keluar");
+
+      alert("Semua data stok dan riwayat berhasil dihapus!");
+      
+      // 🔹 Update state global supaya UI langsung kosong
+      if (setStockData) setStockData([]);
+    } catch (err) {
+      console.error("⚠️ Gagal reset semua data:", err);
+      alert("Gagal menghapus semua data!");
     }
   };
 
