@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button, Table, ListGroup } from "react-bootstrap";
+import { Container, Form, Button, ListGroup } from "react-bootstrap";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
 const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
-  const [riwayat, setRiwayat] = useState([]);
+  const [riwayat, setRiwayat] = useState(
+    JSON.parse(localStorage.getItem("riwayatBarangKeluar") || "[]")
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [form, setForm] = useState({
@@ -15,6 +17,8 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     spesifikasi: "",
     jumlah: "",
     tanggal: "",
+    alasan: "",
+    tujuan: "",
   });
 
   // 🔹 Load data dari Excel
@@ -39,7 +43,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     loadExcelData();
   }, []);
 
-  // 🔍 Filter pencarian nama barang (tanpa batas jumlah)
+  // 🔍 Filter pencarian nama barang
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredItems([]);
@@ -55,7 +59,6 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     }
   }, [searchTerm, items]);
 
-  // 🔹 Saat klik hasil autocomplete
   const handleSelect = (item) => {
     setForm({
       ...form,
@@ -67,47 +70,36 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     setFilteredItems([]);
   };
 
-  // 🔹 Simpan barang keluar
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { nama, jumlah, tanggal, alasan, tujuan } = form;
+    if (!nama || !jumlah || !tanggal || !alasan || !tujuan)
+      return alert("Lengkapi semua kolom!");
 
-  if (!form.nama || !form.jumlah || !form.tanggal)
-    return alert("Lengkapi semua kolom!");
+    onBarangKeluar(
+      form.kode,
+      form.nama,
+      form.spesifikasi,
+      form.jumlah,
+      form.tanggal
+    );
 
-  // 🔹 Jalankan fungsi lokal agar stok di React ikut berubah
-  onBarangKeluar(
-    form.kode,
-    form.nama,
-    form.spesifikasi,
-    form.jumlah,
-    form.tanggal
-  );
+    const newRiwayat = [...riwayat, form];
+    setRiwayat(newRiwayat);
+    localStorage.setItem("riwayatBarangKeluar", JSON.stringify(newRiwayat));
 
-  // 🔹 Kirim data ke backend Flask untuk disimpan ke riwayat
-  try {
-    await fetch(`http://${window.location.hostname}:5000/api/riwayat-barang-keluar`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+    setForm({
+      kode: "",
+      nama: "",
+      spesifikasi: "",
+      jumlah: "",
+      tanggal: "",
+      alasan: "",
+      tujuan: "",
     });
-  } catch (err) {
-    console.error("⚠️ Gagal menyimpan riwayat ke backend:", err);
-  }
-
-  // 🔹 Update riwayat di frontend agar tetap sinkron
-  setRiwayat([...riwayat, form]);
-
-  // 🔹 Reset form setelah submit
-  setForm({
-    kode: "",
-    nama: "",
-    spesifikasi: "",
-    jumlah: "",
-    tanggal: "",
-  });
-
-  setSearchTerm("");
-};
+    setSearchTerm("");
+    alert("Barang keluar berhasil disimpan!");
+  };
 
   return (
     <Container className="py-4">
@@ -127,7 +119,6 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
         </div>
       </div>
 
-      {/* 🔍 Form Input Barang Keluar */}
       <Form onSubmit={handleSubmit} className="mb-4 position-relative">
         <Form.Group className="mb-3">
           <Form.Label>Nama Barang</Form.Label>
@@ -138,8 +129,6 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             autoComplete="off"
           />
-
-          {/* 🔽 Dropdown autocomplete */}
           {filteredItems.length > 0 && (
             <ListGroup
               className="position-absolute w-100 shadow-sm"
@@ -151,11 +140,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
               }}
             >
               {filteredItems.map((item, i) => (
-                <ListGroup.Item
-                  key={i}
-                  action
-                  onClick={() => handleSelect(item)}
-                >
+                <ListGroup.Item key={i} action onClick={() => handleSelect(item)}>
                   <div className="fw-bold">{item.nama}</div>
                   <div className="small text-muted">
                     {item.kode} — {item.spesifikasi}
@@ -194,37 +179,31 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
           />
         </Form.Group>
 
+        <Form.Group className="mb-3">
+          <Form.Label>Alasan / Keterangan</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            placeholder="Tuliskan alasan barang keluar..."
+            value={form.alasan}
+            onChange={(e) => setForm({ ...form, alasan: e.target.value })}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Untuk Keperluan / Tujuan</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Contoh: Laboratorium, Workshop, Proyek A..."
+            value={form.tujuan}
+            onChange={(e) => setForm({ ...form, tujuan: e.target.value })}
+          />
+        </Form.Group>
+
         <Button type="submit" variant="primary">
           Simpan
         </Button>
       </Form>
-
-      {/* 📋 Riwayat Barang Keluar */}
-      <h5>Riwayat Barang Keluar</h5>
-      <Table bordered hover responsive className="shadow-sm align-middle">
-        <thead className="table-danger text-center">
-          <tr>
-            <th>No</th>
-            <th>Kode</th>
-            <th>Nama</th>
-            <th>Spesifikasi</th>
-            <th>Jumlah</th>
-            <th>Tanggal</th>
-          </tr>
-        </thead>
-        <tbody className="text-center">
-          {riwayat.map((r, i) => (
-            <tr key={i}>
-              <td>{i + 1}</td>
-              <td>{r.kode}</td>
-              <td>{r.nama}</td>
-              <td>{r.spesifikasi}</td>
-              <td>{r.jumlah}</td>
-              <td>{r.tanggal}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
     </Container>
   );
 };

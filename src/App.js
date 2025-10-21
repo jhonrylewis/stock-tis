@@ -5,6 +5,10 @@ import Dashboard from "./pages/dashboard";
 import BarangMasuk from "./pages/barangmasuk";
 import BarangKeluar from "./pages/barangkeluar";
 import StockBarang from "./pages/stockbarang";
+import RiwayatMasuk from "./pages/riwayatmasuk";
+import RiwayatKeluar from "./pages/riwayatkeluar";
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -193,6 +197,27 @@ function App() {
             )
           }
         />
+        <Route
+      path="/riwayat-masuk"
+      element={
+        isLoggedIn ? (
+          <RiwayatMasuk onLogout={handleLogout} />
+        ) : (
+          <Navigate to="/" />
+        )
+      }
+    />
+
+    <Route
+      path="/riwayat-keluar"
+      element={
+        isLoggedIn ? (
+          <RiwayatKeluar onLogout={handleLogout} />
+        ) : (
+          <Navigate to="/" />
+        )
+      }
+    />
       </Routes>
     </Router>
   );

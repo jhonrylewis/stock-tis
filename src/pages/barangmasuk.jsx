@@ -68,29 +68,47 @@ const BarangMasuk = ({ onLogout, onBarangMasuk }) => {
   };
 
   // 🔹 Simpan barang masuk
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.nama || !form.jumlah || !form.tanggal)
-      return alert("Lengkapi semua kolom!");
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    onBarangMasuk(
-      form.kode,
-      form.nama,
-      form.spesifikasi,
-      form.jumlah,
-      form.tanggal
-    );
+  if (!form.nama || !form.jumlah || !form.tanggal)
+    return alert("Lengkapi semua kolom!");
 
-    setRiwayat([...riwayat, form]);
-    setForm({
-      kode: "",
-      nama: "",
-      spesifikasi: "",
-      jumlah: "",
-      tanggal: "",
+  // Proses frontend lama tetap jalan
+  onBarangMasuk(
+    form.kode,
+    form.nama,
+    form.spesifikasi,
+    form.jumlah,
+    form.tanggal
+  );
+
+  // Kirim data ke backend Flask (riwayat barang masuk)
+  try {
+    await fetch(`http://${window.location.hostname}:5000/api/riwayat-barang-masuk`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
     });
-    setSearchTerm("");
-  };
+  } catch (err) {
+    console.error("Gagal menyimpan ke backend:", err);
+  }
+
+  // Update riwayat di frontend agar tetap sinkron
+  setRiwayat([...riwayat, form]);
+
+  // Reset form
+  setForm({
+    kode: "",
+    nama: "",
+    spesifikasi: "",
+    jumlah: "",
+    tanggal: "",
+  });
+
+  setSearchTerm("");
+};
+
 
   return (
     <Container className="py-4">

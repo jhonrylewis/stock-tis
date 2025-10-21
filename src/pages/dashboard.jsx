@@ -50,6 +50,33 @@ const Dashboard = ({ onLogout }) => {
             </Card.Body>
           </Card>
         </Col>
+
+        <Row className="g-4 mt-4">
+  <Col md={6}>
+    <Card className="shadow text-center border-0 p-3">
+      <Card.Body>
+        <h4>📘 Riwayat Barang Masuk</h4>
+        <p className="text-muted">Lihat daftar barang yang sudah masuk</p>
+        <Button variant="success" onClick={() => navigate('/riwayat-masuk')}>
+          Lihat
+        </Button>
+      </Card.Body>
+    </Card>
+  </Col>
+
+  <Col md={6}>
+    <Card className="shadow text-center border-0 p-3">
+      <Card.Body>
+        <h4>📙 Riwayat Barang Keluar</h4>
+        <p className="text-muted">Lihat daftar barang yang sudah keluar</p>
+        <Button variant="warning" onClick={() => navigate('/riwayat-keluar')}>
+          Lihat
+        </Button>
+      </Card.Body>
+    </Card>
+  </Col>
+</Row>
+
       </Row>
     </Container>
   );

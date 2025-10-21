@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 const DATA_FILE = "./data_stock.json";
+const RIWAYAT_MASUK_FILE = "./riwayat_barang_masuk.json";
+const RIWAYAT_KELUAR_FILE = "./riwayat_barang_keluar.json";
 
 // 🔹 Ambil semua data stok
 app.get("/api/stock", (req, res) => {
@@ -21,6 +23,43 @@ app.post("/api/stock", (req, res) => {
   const stockData = req.body;
   fs.writeFileSync(DATA_FILE, JSON.stringify(stockData, null, 2));
   res.json({ message: "Data stok berhasil disimpan" });
+});
+
+app.get("/api/riwayat-barang-masuk", (req, res) => {
+  if (!fs.existsSync(RIWAYAT_MASUK_FILE)) return res.json([]);
+  const data = JSON.parse(fs.readFileSync(RIWAYAT_MASUK_FILE, "utf-8"));
+  res.json(data);
+});
+
+app.post("/api/riwayat-barang-masuk", (req, res) => {
+  const newData = req.body;
+  const existingData = fs.existsSync(RIWAYAT_MASUK_FILE)
+    ? JSON.parse(fs.readFileSync(RIWAYAT_MASUK_FILE, "utf-8"))
+    : [];
+
+  existingData.push(newData);
+  fs.writeFileSync(RIWAYAT_MASUK_FILE, JSON.stringify(existingData, null, 2));
+  res.json({ message: "Riwayat barang masuk berhasil disimpan" });
+});
+
+// ==============================
+// 🔴 RIWAYAT BARANG KELUAR
+// ==============================
+app.get("/api/riwayat-barang-keluar", (req, res) => {
+  if (!fs.existsSync(RIWAYAT_KELUAR_FILE)) return res.json([]);
+  const data = JSON.parse(fs.readFileSync(RIWAYAT_KELUAR_FILE, "utf-8"));
+  res.json(data);
+});
+
+app.post("/api/riwayat-barang-keluar", (req, res) => {
+  const newData = req.body;
+  const existingData = fs.existsSync(RIWAYAT_KELUAR_FILE)
+    ? JSON.parse(fs.readFileSync(RIWAYAT_KELUAR_FILE, "utf-8"))
+    : [];
+
+  existingData.push(newData);
+  fs.writeFileSync(RIWAYAT_KELUAR_FILE, JSON.stringify(existingData, null, 2));
+  res.json({ message: "Riwayat barang keluar berhasil disimpan" });
 });
 
 // 🔹 Jalankan server di semua IP LAN

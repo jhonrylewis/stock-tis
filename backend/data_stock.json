@@ -288,5 +288,25 @@
     "sisa": 2,
     "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "-"
+  },
+  {
+    "kode": "231003H002",
+    "nama": "HANDPHONE",
+    "spesifikasi": "HOT 50 6/256GB INFINIX",
+    "jumlahMasuk": 3,
+    "jumlahKeluar": 0,
+    "sisa": 3,
+    "terakhirMasuk": "2025-10-21",
+    "terakhirKeluar": "-"
+  },
+  {
+    "kode": "231002P017",
+    "nama": "PRINTER THERMAL",
+    "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
+    "jumlahMasuk": 31,
+    "jumlahKeluar": 14,
+    "sisa": 17,
+    "terakhirMasuk": "2025-10-21",
+    "terakhirKeluar": "2025-10-21"
   }
 ]
