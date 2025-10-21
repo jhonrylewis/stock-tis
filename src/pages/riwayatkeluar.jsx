@@ -1,37 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Button, Spinner, Alert } from "react-bootstrap";
+import { Container, Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const RiwayatKeluar = ({ onLogout }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [riwayat, setRiwayat] = useState([]);
 
+  // 🔹 Ambil data riwayat dari backend
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRiwayat = async () => {
       try {
-        const res = await fetch(
-          `http://${window.location.hostname}:5000/api/riwayat-barang-keluar`
-        );
-        if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        const json = await res.json();
-        setData(json);
+        const response = await fetch(`http://${window.location.hostname}:5000/api/riwayat-barang-keluar`);
+        if (!response.ok) throw new Error("Gagal memuat data riwayat.");
+        const data = await response.json();
+        setRiwayat(data);
       } catch (err) {
-        console.error("Gagal ambil riwayat keluar:", err);
-        setError("Gagal mengambil data riwayat barang keluar.");
-      } finally {
-        setLoading(false);
+        console.error("⚠️ Gagal mengambil data riwayat:", err);
       }
     };
-
-    fetchData();
+    fetchRiwayat();
   }, []);
 
   return (
     <Container className="py-4">
-      <div className="d-flex justify-content-between mb-3">
-        <h3>📤 Riwayat Barang Keluar</h3>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3>📜 Riwayat Barang Keluar</h3>
         <div>
           <Button
             variant="secondary"
@@ -46,48 +39,41 @@ const RiwayatKeluar = ({ onLogout }) => {
         </div>
       </div>
 
-      {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" /> <p>Memuat data...</p>
-        </div>
-      ) : error ? (
-        <Alert variant="danger" className="text-center">
-          {error}
-        </Alert>
-      ) : (
-        <Table bordered hover responsive>
-          <thead className="table-danger text-center">
+      {/* 📋 Tabel Riwayat Barang Keluar */}
+      <Table bordered hover responsive className="shadow-sm align-middle">
+        <thead className="table-danger text-center">
+          <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Spesifikasi</th>
+            <th>Jumlah</th>
+            <th>Tanggal</th>
+            <th>Keterangan / Tujuan</th> {/* 🔹 Kolom baru */}
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {riwayat.length === 0 ? (
             <tr>
-              <th>No</th>
-              <th>Kode</th>
-              <th>Nama</th>
-              <th>Spesifikasi</th>
-              <th>Jumlah</th>
-              <th>Tanggal</th>
+              <td colSpan={7} className="text-muted">
+                Belum ada data riwayat barang keluar.
+              </td>
             </tr>
-          </thead>
-          <tbody className="text-center">
-            {data.length > 0 ? (
-              data.map((item, i) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
-                  <td>{item.kode}</td>
-                  <td>{item.nama}</td>
-                  <td>{item.spesifikasi}</td>
-                  <td>{item.jumlah}</td>
-                  <td>{item.tanggal}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-muted">
-                  Tidak ada data riwayat barang keluar
-                </td>
+          ) : (
+            riwayat.map((r, i) => (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{r.kode}</td>
+                <td>{r.nama}</td>
+                <td>{r.spesifikasi}</td>
+                <td>{r.jumlah}</td>
+                <td>{r.tanggal}</td>
+                <td>{r.keterangan || "-"}</td> {/* 🔹 tampilkan field baru */}
               </tr>
-            )}
-          </tbody>
-        </Table>
-      )}
+            ))
+          )}
+        </tbody>
+      </Table>
     </Container>
   );
 };

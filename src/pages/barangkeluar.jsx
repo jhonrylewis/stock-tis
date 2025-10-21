@@ -15,6 +15,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     spesifikasi: "",
     jumlah: "",
     tanggal: "",
+    keterangan: "", // 🔹 field baru
   });
 
   // 🔹 Load data dari Excel
@@ -39,7 +40,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
     loadExcelData();
   }, []);
 
-  // 🔍 Filter pencarian nama barang (tanpa batas jumlah)
+  // 🔍 Filter pencarian nama barang
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredItems([]);
@@ -68,46 +69,47 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
   };
 
   // 🔹 Simpan barang keluar
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!form.nama || !form.jumlah || !form.tanggal)
-    return alert("Lengkapi semua kolom!");
+    if (!form.nama || !form.jumlah || !form.tanggal)
+      return alert("Lengkapi semua kolom!");
 
-  // 🔹 Jalankan fungsi lokal agar stok di React ikut berubah
-  onBarangKeluar(
-    form.kode,
-    form.nama,
-    form.spesifikasi,
-    form.jumlah,
-    form.tanggal
-  );
+    // 🔹 Jalankan fungsi lokal agar stok di React ikut berubah
+    onBarangKeluar(
+      form.kode,
+      form.nama,
+      form.spesifikasi,
+      form.jumlah,
+      form.tanggal
+    );
 
-  // 🔹 Kirim data ke backend Flask untuk disimpan ke riwayat
-  try {
-    await fetch(`http://${window.location.hostname}:5000/api/riwayat-barang-keluar`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+    // 🔹 Kirim data ke backend untuk disimpan ke riwayat
+    try {
+      await fetch(`http://${window.location.hostname}:5000/api/riwayat-barang-keluar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+    } catch (err) {
+      console.error("⚠️ Gagal menyimpan riwayat ke backend:", err);
+    }
+
+    // 🔹 Update riwayat di frontend agar tetap sinkron
+    setRiwayat([...riwayat, form]);
+
+    // 🔹 Reset form setelah submit
+    setForm({
+      kode: "",
+      nama: "",
+      spesifikasi: "",
+      jumlah: "",
+      tanggal: "",
+      keterangan: "",
     });
-  } catch (err) {
-    console.error("⚠️ Gagal menyimpan riwayat ke backend:", err);
-  }
 
-  // 🔹 Update riwayat di frontend agar tetap sinkron
-  setRiwayat([...riwayat, form]);
-
-  // 🔹 Reset form setelah submit
-  setForm({
-    kode: "",
-    nama: "",
-    spesifikasi: "",
-    jumlah: "",
-    tanggal: "",
-  });
-
-  setSearchTerm("");
-};
+    setSearchTerm("");
+  };
 
   return (
     <Container className="py-4">
@@ -194,6 +196,18 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
           />
         </Form.Group>
 
+        {/* 🔹 Field baru: Keterangan/Tujuan */}
+        <Form.Group className="mb-3">
+          <Form.Label>Keterangan / Tujuan</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            placeholder="Masukkan keterangan atau tujuan barang keluar..."
+            value={form.keterangan}
+            onChange={(e) => setForm({ ...form, keterangan: e.target.value })}
+          />
+        </Form.Group>
+
         <Button type="submit" variant="primary">
           Simpan
         </Button>
@@ -210,6 +224,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
             <th>Spesifikasi</th>
             <th>Jumlah</th>
             <th>Tanggal</th>
+            <th>Keterangan / Tujuan</th> {/* 🔹 Kolom baru */}
           </tr>
         </thead>
         <tbody className="text-center">
@@ -221,6 +236,7 @@ const BarangKeluar = ({ onLogout, onBarangKeluar }) => {
               <td>{r.spesifikasi}</td>
               <td>{r.jumlah}</td>
               <td>{r.tanggal}</td>
+              <td>{r.keterangan || "-"}</td>
             </tr>
           ))}
         </tbody>
