@@ -1,21 +1,21 @@
 [
   {
+    "kode": "377004P001",
+    "nama": "POWER SUPPLY UNIT (PSU) KOMPUTER",
+    "spesifikasi": "480W MEREK SIMBADDA",
+    "jumlahMasuk": 5,
+    "jumlahKeluar": 2,
+    "sisa": 3,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "2025-11-06"
+  },
+  {
     "kode": "377004M002",
     "nama": "MOTHERBOARD KOMPUTER",
     "spesifikasi": "TIPE PRIME H510M-K LGA 1200 MEREK ASUS",
     "jumlahMasuk": 4,
     "jumlahKeluar": 0,
     "sisa": 4,
-    "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
-  },
-  {
-    "kode": "377004P001",
-    "nama": "POWER SUPPLY UNIT (PSU) KOMPUTER",
-    "spesifikasi": "480W MEREK SIMBADDA",
-    "jumlahMasuk": 5,
-    "jumlahKeluar": 0,
-    "sisa": 5,
     "terakhirMasuk": "2025-10-18",
     "terakhirKeluar": "-"
   },
@@ -72,12 +72,12 @@
   {
     "kode": "377004H011",
     "nama": "HDMI WIRELESS EXTENDER",
-    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER",
+    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER, UGREEN",
     "jumlahMasuk": 2,
-    "jumlahKeluar": 0,
-    "sisa": 2,
+    "jumlahKeluar": 2,
+    "sisa": 0,
     "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
+    "terakhirKeluar": "2025-11-10"
   },
   {
     "kode": "362002R002",
@@ -100,19 +100,19 @@
     "terakhirKeluar": "-"
   },
   {
-    "kode": "377004K054",
-    "nama": "KABEL HDMI 30 METER",
+    "kode": "377004K055",
+    "nama": "KABEL HDMI 50 METER",
     "spesifikasi": "KONEKTOR BENTUK PACKING PABRIK",
     "jumlahMasuk": 2,
-    "jumlahKeluar": 0,
-    "sisa": 2,
+    "jumlahKeluar": 1,
+    "sisa": 1,
     "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
+    "terakhirKeluar": "2025-10-29"
   },
   {
     "kode": "377004P028",
     "nama": "POWER SURGE PROTECTOR (PROTEKSI TEGANGAN LISTRIK BERLEBIH PADA JALUR LISTRIK)",
-    "spesifikasi": "TIPE PM8-GR  ESSENTIAL SURGEARREST 8 OUTLETS 230V MEREK APC",
+    "spesifikasi": "TIPE PM5-GR  ESSENTIAL SURGEARREST 5 OUTLETS 230V MEREK APC",
     "jumlahMasuk": 4,
     "jumlahKeluar": 0,
     "sisa": 4,
@@ -144,10 +144,10 @@
     "nama": "SSD KOMPUTER ( MEMORY PENYIMPANAN DATA) 128 GB",
     "spesifikasi": "TIPE SATA MEREK VGEN",
     "jumlahMasuk": 10,
-    "jumlahKeluar": 0,
-    "sisa": 10,
+    "jumlahKeluar": 1,
+    "sisa": 9,
     "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
+    "terakhirKeluar": "2025-11-06"
   },
   {
     "kode": "377004M003",
@@ -220,26 +220,6 @@
     "terakhirKeluar": "-"
   },
   {
-    "kode": "231002P003",
-    "nama": "POWER SUPPLY CCTV 30A",
-    "spesifikasi": "12V 30A BOX BESI, TERMINAL KONEKTOR, FUSE",
-    "jumlahMasuk": 5,
-    "jumlahKeluar": 0,
-    "sisa": 5,
-    "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
-  },
-  {
-    "kode": "377004H005",
-    "nama": "HEAD PRINTER EPSON BESAR",
-    "spesifikasi": "UNTUK EPSON LQ 2180/2190, RRT",
-    "jumlahMasuk": 5,
-    "jumlahKeluar": 0,
-    "sisa": 5,
-    "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
-  },
-  {
     "kode": "377004P018",
     "nama": "POWER SUPPLY PRINTER EPSON LQ 2190",
     "spesifikasi": "DC 35V 3A",
@@ -270,16 +250,6 @@
     "terakhirKeluar": "-"
   },
   {
-    "kode": "374010C003",
-    "nama": "CABLE TIES 20 CM",
-    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
-    "jumlahMasuk": 12,
-    "jumlahKeluar": 0,
-    "sisa": 12,
-    "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "-"
-  },
-  {
     "kode": "374010C001",
     "nama": "CABLE TIES 10 CM",
     "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
@@ -290,13 +260,23 @@
     "terakhirKeluar": "-"
   },
   {
+    "kode": "374010C005",
+    "nama": "CABLE TIES 30 CM",
+    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
+    "jumlahMasuk": 12,
+    "jumlahKeluar": 0,
+    "sisa": 12,
+    "terakhirMasuk": "2025-10-18",
+    "terakhirKeluar": "-"
+  },
+  {
     "kode": "231002P017",
     "nama": "PRINTER THERMAL",
     "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
-    "jumlahMasuk": 15,
-    "jumlahKeluar": 1,
-    "sisa": 14,
-    "terakhirMasuk": "2025-10-18",
-    "terakhirKeluar": "2025-10-21"
+    "jumlahMasuk": 11,
+    "jumlahKeluar": 3,
+    "sisa": 8,
+    "terakhirMasuk": "2025-09-20",
+    "terakhirKeluar": "2025-10-20"
   }
 ]

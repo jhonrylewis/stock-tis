@@ -1,16 +1,16 @@
 [
   {
-    "kode": "377004M002",
-    "nama": "MOTHERBOARD KOMPUTER",
-    "spesifikasi": "TIPE PRIME H510M-K LGA 1200 MEREK ASUS",
-    "jumlah": "4",
-    "tanggal": "2025-10-18"
-  },
-  {
     "kode": "377004P001",
     "nama": "POWER SUPPLY UNIT (PSU) KOMPUTER",
     "spesifikasi": "480W MEREK SIMBADDA",
     "jumlah": "5",
+    "tanggal": "2025-10-18"
+  },
+  {
+    "kode": "377004M002",
+    "nama": "MOTHERBOARD KOMPUTER",
+    "spesifikasi": "TIPE PRIME H510M-K LGA 1200 MEREK ASUS",
+    "jumlah": "4",
     "tanggal": "2025-10-18"
   },
   {
@@ -51,7 +51,7 @@
   {
     "kode": "377004H011",
     "nama": "HDMI WIRELESS EXTENDER",
-    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER",
+    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER, UGREEN",
     "jumlah": "2",
     "tanggal": "2025-10-18"
   },
@@ -70,8 +70,8 @@
     "tanggal": "2025-10-18"
   },
   {
-    "kode": "377004K054",
-    "nama": "KABEL HDMI 30 METER",
+    "kode": "377004K055",
+    "nama": "KABEL HDMI 50 METER",
     "spesifikasi": "KONEKTOR BENTUK PACKING PABRIK",
     "jumlah": "2",
     "tanggal": "2025-10-18"
@@ -79,7 +79,7 @@
   {
     "kode": "377004P028",
     "nama": "POWER SURGE PROTECTOR (PROTEKSI TEGANGAN LISTRIK BERLEBIH PADA JALUR LISTRIK)",
-    "spesifikasi": "TIPE PM8-GR  ESSENTIAL SURGEARREST 8 OUTLETS 230V MEREK APC",
+    "spesifikasi": "TIPE PM5-GR  ESSENTIAL SURGEARREST 5 OUTLETS 230V MEREK APC",
     "jumlah": "4",
     "tanggal": "2025-10-18"
   },
@@ -161,20 +161,6 @@
     "tanggal": "2025-10-18"
   },
   {
-    "kode": "231002P003",
-    "nama": "POWER SUPPLY CCTV 30A",
-    "spesifikasi": "12V 30A BOX BESI, TERMINAL KONEKTOR, FUSE",
-    "jumlah": "5",
-    "tanggal": "2025-10-18"
-  },
-  {
-    "kode": "377004H005",
-    "nama": "HEAD PRINTER EPSON BESAR",
-    "spesifikasi": "UNTUK EPSON LQ 2180/2190, RRT",
-    "jumlah": "5",
-    "tanggal": "2025-10-18"
-  },
-  {
     "kode": "377004P018",
     "nama": "POWER SUPPLY PRINTER EPSON LQ 2190",
     "spesifikasi": "DC 35V 3A",
@@ -196,13 +182,6 @@
     "tanggal": "2025-10-18"
   },
   {
-    "kode": "374010C003",
-    "nama": "CABLE TIES 20 CM",
-    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
-    "jumlah": "12",
-    "tanggal": "2025-10-18"
-  },
-  {
     "kode": "374010C001",
     "nama": "CABLE TIES 10 CM",
     "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
@@ -210,10 +189,17 @@
     "tanggal": "2025-10-18"
   },
   {
+    "kode": "374010C005",
+    "nama": "CABLE TIES 30 CM",
+    "spesifikasi": "KEMASAN : 100 PCS / PACK - RRT",
+    "jumlah": "12",
+    "tanggal": "2025-10-18"
+  },
+  {
     "kode": "231002P017",
     "nama": "PRINTER THERMAL",
     "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
-    "jumlah": "15",
-    "tanggal": "2025-10-18"
+    "jumlah": "11",
+    "tanggal": "2025-09-20"
   }
 ]

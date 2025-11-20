@@ -1,10 +1,50 @@
 [
   {
+    "kode": "377004P001",
+    "nama": "POWER SUPPLY UNIT (PSU) KOMPUTER",
+    "spesifikasi": "480W MEREK SIMBADDA",
+    "jumlah": "2",
+    "tanggal": "2025-11-06",
+    "keterangan": "Krani Gateng, Kasie Finance"
+  },
+  {
+    "kode": "377004S042",
+    "nama": "SSD KOMPUTER ( MEMORY PENYIMPANAN DATA) 128 GB",
+    "spesifikasi": "TIPE SATA MEREK VGEN",
+    "jumlah": "1",
+    "tanggal": "2025-11-06",
+    "keterangan": "Krani Gateng"
+  },
+  {
+    "kode": "377004H011",
+    "nama": "HDMI WIRELESS EXTENDER",
+    "spesifikasi": "TRANSMITTER & RECEIVER 5G/RESOLUSI 1080 P, JARAK 50 METER, UGREEN",
+    "jumlah": "2",
+    "tanggal": "2025-11-10",
+    "keterangan": "Ruang Meeting Gateng"
+  },
+  {
+    "kode": "377004K055",
+    "nama": "KABEL HDMI 50 METER",
+    "spesifikasi": "KONEKTOR BENTUK PACKING PABRIK",
+    "jumlah": "1",
+    "tanggal": "2025-10-29",
+    "keterangan": "JOGLO PAK GM"
+  },
+  {
+    "kode": "231002P017",
+    "nama": "PRINTER THERMAL",
+    "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
+    "jumlah": "2",
+    "tanggal": "2025-11-11",
+    "keterangan": "AFD 2 DAN 3"
+  },
+  {
     "kode": "231002P017",
     "nama": "PRINTER THERMAL",
     "spesifikasi": "TIPE MAX 583 58MM MEREK  AUQOZ",
     "jumlah": "1",
-    "tanggal": "2025-10-21",
+    "tanggal": "2025-10-20",
     "keterangan": "AFD 20"
   }
 ]
