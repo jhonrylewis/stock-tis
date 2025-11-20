@@ -10,6 +10,7 @@ import RiwayatKeluar from "./pages/riwayatkeluar";
 
 
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [stockData, setStockData] = useState([]);

@@ -1,18 +1,42 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import logo from "../assets/warehouse.png";
 
 const Dashboard = ({ onLogout }) => {
   const navigate = useNavigate();
 
   return (
     <Container className="py-5">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3>📊 Dashboard Gudang</h3>
-        <Button variant="danger" onClick={() => { onLogout(); navigate('/'); }}>
-          Logout
-        </Button>
-      </div>
+  <div
+  className="text-white d-flex justify-content-between align-items-center mb-4"
+  style={{
+    backgroundColor: "white",
+    padding: "15px",
+    borderRadius: "10px"
+  }}
+>
+  {/* Judul Dashboard */}
+  <h3 className="text-dark m-0">📊 Dashboard</h3>
+
+  {/* Logo di tengah */}
+  <img 
+    src={logo} 
+    alt="Logo"
+    style={{ 
+      height: "50px", 
+      objectFit: "contain"
+    }}
+  />
+
+  {/* Tombol Logout */}
+  <Button 
+    variant="danger" 
+    onClick={() => { onLogout(); navigate('/'); }}
+  >
+    Logout
+  </Button>
+</div>
 
       <Row className="g-4">
         <Col md={4}>
